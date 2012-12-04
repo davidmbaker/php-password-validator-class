@@ -37,9 +37,30 @@
 */
 
 /**
-*	
+* Usage:
+*		require_once('simple_password_class.php');
+*		
+*		$o = new passwordValidator;
 *
+*		if($o->checkPWord( $password )){
+*			echo "Passed";
+*		}else{
+*			echo "Failed";	
+*		}
+*
+* Configurable Options:
+*
+*		setMinLength( int ) // set minimum password length. Default: 8
+*		setMaxLength( int ) // set maximum password length. Default: 32
+*		setMinLetters( int ) // set minimum number of alphabetic characters . Default: 3
+*		setMinNumeric( int ) // set minimum number of numeric characters. Default: 1
+*		setMinSymbols( int ) // set minimum number of symbols (punctuation) characters. Default: 1
+*		setSymbolList( string) // list of acceptable symbols (punctuation). Default: !@#$%&*
+*		setMinUpperCase( int ) // set minimum number of uppercase alphabetic characters. Default: 1 
+*		setIllegalChars( string ) // list of UNacceptable characters. Default: _\/?.><~`()-"'
 */	
+
+
 final class passwordValidator{
 	
 	//default settings
@@ -51,7 +72,7 @@ final class passwordValidator{
 	protected $_symbollist = "!@#$%&*";
 	protected $_str = '';
 	protected $_errorcode = '0';
-	protected $_illegalchars = '';
+	protected $_illegalchars = '_\/?.><~`()-"'."'";
 	protected $_minletters = 3;
 	protected $_minuppercase = 1;
 	
@@ -66,46 +87,92 @@ final class passwordValidator{
 		return count ($_matches[0]);
 	}
 	
+	/**
+	* function counts all UpperCase characters and returns count
+	* @param string _$_str string to check
+	* @return count ( int ) or boolean false is none found
+	*/
 	private function _countUppers() {
 		preg_match_all( "/[A-Z]/", $this->_str  , $_matches );
 		return count ($_matches[0]);
 	}
 	
+	/**
+	* function getter for fetching last known error message
+	* @return 0 = no error or error message as string
+	*/
 	public function getErrorCode() {
 		return $this->_errorcode;
 	}
+	
+	/**
+	* function setter for configuring illegal characters
+	* @param string containing characters not allowed (illegal) or boolean false to skip
+	*/
 	public function setIllegalChars($_string) {
 		$this->_illegalchars = $_string;
 	} 
 	
+	/**
+	* function setter for setting maximum password length
+	* @param int
+	*/
 	public function setMaxLength($_int) {
 		$this->_maxcharlen = $_int;
 	}
 	
-	public function setMinLetters($_int) {
-		$this->_minletters = $_int;
-	}
-	
-	public function setMinSymbols($_int){
-		$this->_minsymbols = $_int;
-	}
-	
-	public function setSymbolList($_string){
-		$this->_symbollist = $_string;	
-	}
-	
-	public function setMinNumeric($_string){
-		$this->_minnumeric = $_string;	
-	}
-	
+	/**
+	* function setter for setting minimum password length
+	* @param int
+	*/
 	public function setMinLength($_int){
 		$this->_mincharlen = $_int;
 	}
 	
+	/**
+	* function setter for setting minimum password length
+	* @param int
+	*/
+	public function setMinLetters($_int) {
+		$this->_minletters = $_int;
+	}
+	
+	/**
+	* function setter for setting minimum number of symbols (punctuation) characters
+	* @param int
+	*/
+	public function setMinSymbols($_int){
+		$this->_minsymbols = $_int;
+	}
+	
+	/**
+	* function setter for configuring allowable symbol (punctuation) characters
+	* @param string containing punctuation characters allowed (legal) or boolean false to skip
+	*/
+	public function setSymbolList($_string){
+		$this->_symbollist = $_string;	
+	}
+	
+	/**
+	* function setter for setting minimum number of Numerical characters
+	* @param int
+	*/
+	public function setMinNumeric($_string){
+		$this->_minnumeric = $_string;	
+	}
+	
+	/**
+	* function setter for setting minimum number of Numerical characters
+	* @param int or boolean false to skip
+	*/
 	public function setMinUpperCase($_int){
 		$this->_minuppercase = $_int;
 	}
-	
+	/**
+	* function checks password string based on settings configured
+	* @param password as string
+	* @returns boolean false = failed / true = passed
+	*/
 	public function checkPWord( $_str ){
 		if(trim( $this->_illegalchars ) == ''){
 			$this->_illegalchars = false;
@@ -188,6 +255,5 @@ final class passwordValidator{
 		
 		return true;
 	}
-	
-	
 }	
+?>
