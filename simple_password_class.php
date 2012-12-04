@@ -3,9 +3,9 @@
   * Project: simple_password_validator_class
   * File name: simple_password_class.php
   * Description: class to make secure password creation easy.
-  * URL: http://www.trolldog.com/scripts/php/classes/simple+password_valitor
+  * URL: https://github.com/davidmbaker/pinhead-code
   *
-  * Author: Mirko Kaiser, http://www.DavidBaker.us.com
+  * Author: David M Baker, http://www.DavidBaker.us.com
   * Copyright (C) 2012 David M Baker
   * First created in USA on 1 December 2012
   * License: New BSD License
