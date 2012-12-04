@@ -48,6 +48,7 @@
 *			echo "Failed";	
 *		}
 *
+*
 * Configurable Options:
 *
 *		setMinLength( int ) // set minimum password length. Default: 8
